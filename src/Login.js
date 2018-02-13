@@ -10,19 +10,19 @@ class Login extends Component {
     }
   }
   handleClick(event){
-    var apiBaseUrl = 'http://localhost:4000/api/';
-    var self = this;
+    var apiBaseUrl = '/';
     var payload={
-      "email":this.state.username,
-      "password":this.state.password
+      username: this.state.username,
+      password: this.state.password
     }
-    axios.post(apiBaseUrl+'login', payload)
+    console.log(payload);
+    axios.post(apiBaseUrl, payload)
       .then(function (response) {
         console.log(response);
-        if(response.data.code == 200){
+        if(response.data.code === 200){
           console.log("Login successfull");
         }
-        else if(response.data.code == 204){
+        else if(response.data.code === 204){
           console.log("Username password do not match");
           alert("username password do not match")
         }
@@ -35,20 +35,26 @@ class Login extends Component {
         console.log(error);
       });
   }
+  onChangeUserName(event) {
+    this.setState({username: event.target.value});
+  }
+  onChangePassword(event) {
+    this.setState({password: event.target.value}); 
+  }
   render() {
     return (
       <div className="Login-window">
-         <input
-           placeHolder="Username" onChange = {(event,newValue) => this.setState({username:newValue})}
+         <input type="text"
+           placeholder="Username" onChange = {this.onChangeUserName.bind(this)}
            />
          <br/>
          <input
            type="password"
-           placeHolder="Password"
-           onChange = {(event,newValue) => this.setState({password:newValue})}
+           placeholder="Password"
+           onChange = {this.onChangePassword.bind(this)}
            />
          <br/>
-         <input type="button" value="Submit" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
+         <input type="button" value="Login" style={style} onClick={(event) => this.handleClick(event)}/>
       </div>
     );
   }

@@ -10,12 +10,11 @@ class Login extends Component {
     }
   }
   handleClick(event){
-    var apiBaseUrl = '/';
+    var apiBaseUrl = '/api/prod/aboveline_jr_test_service';
     var payload={
       username: this.state.username,
       password: this.state.password
     }
-    console.log(payload);
     axios.post(apiBaseUrl, payload)
       .then(function (response) {
         console.log(response);
